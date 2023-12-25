@@ -1,70 +1,42 @@
-# Getting Started with Create React App
+# Hangman (in React!)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## About the Game
 
-## Available Scripts
+This is a classic Hangman game but instead of guessing a word, player is expected to guess a quote from a famous person.
+If game is reset or page is refreshed, a new quote will be generated.
+This project has been coded using ReactJS library
 
-In the project directory, you can run:
+## Installation
 
-### `npm start`
+The game is deployed at the following URL: https://fascinating-figolla-49a3ef.netlify.app/.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+If you want to run the game locally, after cloning the project, you should:
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+# Install Dependencies
 
-### `npm test`
+In the project directory, run `npm install`` to install all necessary dependencies.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+# Run in Development Mode
 
-### `npm run build`
+Run `npm start` to run the app in development mode. This will usually open the game in your default web browser automatically. If it doesn't, you can manually visit http://localhost:3000 (or the port specified in your terminal).
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+-or-
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+# Build for Production:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Run `npm run build` to build the app for production.
+Then, serve it from a static server by running `serve -s build`
 
-### `npm run eject`
+## Gameplay
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+Upon starting the game, you will be propmted for player name. After you enter your name, game starts.
+You will be presented by empty "gallow" and a series of underscores representing the letters in the hidden quote.
+You can start guessing letters one by one. If the guessed letter is in the quote, it will be revealed in its correct position(s).
+Only English alphabet letters are accepted.
+If the guessed letter is not in the quote, a part of the hangman figure will be drawn.
+Keep guessing until you either guess the quote correctly (win) or the hangman figure is completely drawn and you got your guess wrong 6 times(lose).
+If you win, your score is sent and highscore table is displayed. Score is calculated as (100/1+(number of errors))
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### Additional:
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Quotes are pulled from https://api.quotable.io/ (https://github.com/lukePeavey/quotable)

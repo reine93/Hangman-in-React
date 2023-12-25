@@ -12,17 +12,17 @@ The game is deployed at the following URL: https://fascinating-figolla-49a3ef.ne
 
 If you want to run the game locally, after cloning the project, you should:
 
-# Install Dependencies
+### Install Dependencies
 
 In the project directory, run `npm install`` to install all necessary dependencies.
 
-# Run in Development Mode
+### Run in Development Mode
 
 Run `npm start` to run the app in development mode. This will usually open the game in your default web browser automatically. If it doesn't, you can manually visit http://localhost:3000 (or the port specified in your terminal).
 
 -or-
 
-# Build for Production:
+### Build for Production:
 
 Run `npm run build` to build the app for production.
 Then, serve it from a static server by running `serve -s build`

@@ -1,5 +1,5 @@
-import { createSlice } from '@reduxjs/toolkit'
-import { guessPattern } from '../constants'
+import { createSlice } from '@reduxjs/toolkit';
+import { guessPattern } from '../constants';
 
 const initialState = {
   playerName: undefined,
@@ -14,71 +14,69 @@ const initialState = {
   errorMessage: '',
   gameWon: false,
   gameLost: false,
-}
+};
 
 export const gameSlice = createSlice({
   name: 'game',
   initialState,
   reducers: {
     changePlayerName: (state, action) => {
-      state.playerName = action.payload
+      state.playerName = action.payload;
     },
     updateGuessArr: (state, action) => {
-      state.guessQuote = action.payload
+      state.guessQuote = action.payload;
     },
     incrementErrorNum: (state) => {
-      state.errorNum += 1
+      state.errorNum += 1;
     },
     updateErrorMsg: (state, action) => {
-      state.errorMessage = action.payload
+      state.errorMessage = action.payload;
     },
     addGuessedLetter: (state, action) => {
-      state.usedLetters = [...state.usedLetters, action.payload]
+      state.usedLetters = [...state.usedLetters, action.payload];
     },
 
     addTime: (state, action) => {
-      state.timeElapsed += action.payload
+      state.timeElapsed += action.payload;
     },
     winGame: (state) => {
-      state.gameWon = true
+      state.gameWon = true;
     },
     loseGame: (state) => {
-      state.gameLost = true
+      state.gameLost = true;
     },
     resetGameState: (state) => {
-      state.quoteId = undefined
-      state.quoteLen = undefined
-      state.uniqueChars = undefined
-      state.timeElapsed = 0
-      state.errorNum = 0
-      state.usedLetters = []
-      state.errorMessage = ''
-      state.gameWon = false
-      state.gameLost = false
+      state.quoteId = undefined;
+      state.quoteLen = undefined;
+      state.uniqueChars = undefined;
+      state.timeElapsed = 0;
+      state.errorNum = 0;
+      state.usedLetters = [];
+      state.errorMessage = '';
+      state.gameWon = false;
+      state.gameLost = false;
     },
 
     generateNewQuote: (state, action) => {
-      const quoteString = action.payload.content
-      state.quoteArr = quoteString.split('').map(char => {
+      const quoteString = action.payload.content;
+      state.quoteArr = quoteString.split('').map((char) => {
         if (char === ' ') {
-          return '\u00A0' // returns space
+          return '\u00A0'; // returns space
         }
-        return char
-      })
-      state.guessQuote = state.quoteArr.map(char => {
+        return char;
+      });
+      state.guessQuote = state.quoteArr.map((char) => {
         if (guessPattern.test(char)) {
-          return '_'
+          return '_';
         }
-        return char
-      })
-      state.addQuoteId = action.payload._id
-      state.addQuoteLen = action.payload.length
-      state.uniqueChars = [...new Set(state.quoteArr)].filter((char) => guessPattern.test(char)).length
-
-  
-    }
-  }
-})
+        return char;
+      });
+      state.addQuoteId = action.payload._id;
+      state.addQuoteLen = action.payload.length;
+      state.uniqueChars = [...new Set(state.quoteArr)].filter((char) => guessPattern.test(char)).length;
+    },
+  },
+});
 
 export const {
   updateGuessArr,
@@ -90,7 +88,7 @@ export const {
   winGame,
   loseGame,
   resetGameState,
-  generateNewQuote
-} = gameSlice.actions
+  generateNewQuote,
+} = gameSlice.actions;
 
-export default gameSlice.reducer
+export default gameSlice.reducer;

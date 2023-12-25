@@ -1,39 +1,41 @@
-import { useEffect, useState } from 'react'
-import { sendHighscore, fetchQuote } from '../api.js'
-import { useSelector, useDispatch } from 'react-redux'
-import { resetGameState, generateNewQuote} from '../redux/gameState.js'
-import UserInfo from '../components/game/UserInfo'
-import HangmanDraw from '../components/game/HangmanDraw'
-import QuoteGuesser from '../components/game/QuoteGuesser'
-import GameTimer from '../components/game/GameTimer.js'
-import HighscoreTable from '../components/game/HighscoreTable.js'
-import Button from '../components/page-element/Button.js'
+import { useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { sendHighscore, fetchQuote } from '../api.js';
+import { resetGameState, generateNewQuote } from '../redux/gameState.js';
+import UserInfo from '../components/game/UserInfo';
+import HangmanDraw from '../components/game/HangmanDraw';
+import QuoteGuesser from '../components/game/QuoteGuesser';
+import GameTimer from '../components/game/GameTimer.js';
+import HighscoreTable from '../components/game/HighscoreTable.js';
+import Button from '../components/page-element/Button.js';
 
-function GameScreen () {
-  const [loading, setLoading] = useState(true)
+function GameScreen() {
+  const [loading, setLoading] = useState(true);
   const [timeUpdated, setTimeUpdated] = useState(false);
-  const { errorNum, playerName, quoteId, uniqueChars, quoteLen, timeElapsed, gameWon } = useSelector(state => state.game)
-  const [gameReset, setGameReset] = useState(false)
-  const dispatch = useDispatch()
+  const {
+    errorNum, playerName, quoteId, uniqueChars, quoteLen, timeElapsed, gameWon,
+  } = useSelector((state) => state.game);
+  const [gameReset, setGameReset] = useState(false);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    handleFetchQuote() // Generate new quote on first render
-  }, [])
+    handleFetchQuote(); // Generate new quote on first render
+  }, []);
 
   useEffect(() => {
-    if(gameWon && timeUpdated) {
-    console.log("Sending highscore")
-     sendHighscore(quoteId, quoteLen, uniqueChars, playerName, errorNum, timeElapsed);
-     setTimeUpdated(false)
+    if (gameWon && timeUpdated) {
+      console.log('Sending highscore');
+      sendHighscore(quoteId, quoteLen, uniqueChars, playerName, errorNum, timeElapsed);
+      setTimeUpdated(false);
     }
-  }, [timeUpdated])
+  }, [timeUpdated]);
 
   const handleFetchQuote = async () => {
-    setLoading(true)
-    const data = await fetchQuote()
-    dispatch(generateNewQuote(data))
-    setLoading(false)
-  }
+    setLoading(true);
+    const data = await fetchQuote();
+    dispatch(generateNewQuote(data));
+    setLoading(false);
+  };
 
   const handleGameEnd = () => {
     setTimeUpdated(true);
@@ -43,12 +45,12 @@ function GameScreen () {
     setGameReset(true);
     dispatch(resetGameState());
     handleFetchQuote();
-    setTimeUpdated(false)
+    setTimeUpdated(false);
   };
 
   const handleTimerReset = () => {
-    setGameReset(false)
-  }
+    setGameReset(false);
+  };
 
   return (
     <div className="flex flex-col items-center gap-y-1 min-w-[500px]">
@@ -60,10 +62,10 @@ function GameScreen () {
         <HangmanDraw />
         <QuoteGuesser loading={loading} />
         {gameWon && <HighscoreTable />}
-        <Button className='reset-btn' danger onClick={handleReset}>Reset</Button>
+        <Button className="reset-btn" danger onClick={handleReset}>Reset</Button>
       </div>
     </div>
-  )
+  );
 }
 
-export default GameScreen
+export default GameScreen;

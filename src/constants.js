@@ -1,1 +1,1 @@
-export const guessPattern = /^[a-zA-Z]/
+export const guessPattern = /^[a-zA-Z]/;

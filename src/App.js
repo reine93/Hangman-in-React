@@ -1,13 +1,13 @@
-import Hangman from './screens/HangmanFrame'
-import store from './redux/store'
-import { Provider } from 'react-redux'
+import { Provider } from 'react-redux';
+import Hangman from './screens/HangmanFrame';
+import store from './redux/store';
 
-function App () {
+function App() {
   return (
-     <Provider store = {store}>
-        <Hangman />
-     </Provider >
-  )
+    <Provider store={store}>
+      <Hangman />
+    </Provider>
+  );
 }
 
-export default App
+export default App;

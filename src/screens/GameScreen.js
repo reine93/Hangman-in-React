@@ -61,8 +61,8 @@ function GameScreen() {
       <div className="flex flex-col items-center gap-y-1">
         <HangmanDraw />
         <QuoteGuesser loading={loading} />
-        {gameWon && <HighscoreTable />}
         <Button className="reset-btn" danger onClick={handleReset}>Reset</Button>
+        {gameWon && <HighscoreTable />}
       </div>
     </div>
   );

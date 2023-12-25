@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const fetchQuote = async () => {
-  const getQuoteUrl = 'http://api.quotable.io/random';
+  const getQuoteUrl = 'https://api.quotable.io/random';
   const maxLength = 30;
 
   try {

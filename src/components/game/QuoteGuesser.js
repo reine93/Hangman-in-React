@@ -2,9 +2,7 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Button from '../page-element/Button';
 import InputField from '../page-element/InputField';
-import {
-  incrementErrorNum, updateGuessArr, updateErrorMsg, addGuessedLetter, winGame, loseGame,
-} from '../../redux/gameState';
+import { updateErrorMsg, guessHandler} from '../../redux/gameState';
 import { guessPattern } from '../../constants';
 
 function QuoteGuesser({ loading }) {
@@ -31,23 +29,14 @@ function QuoteGuesser({ loading }) {
   const handleGuess = (e) => {
     e.preventDefault();
     const guessedLetter = inputValue;
-
-    if (quoteArr.some((char) => char.toLowerCase() === guessedLetter)) {
-      const newGuessQuote = guessQuote.map((item, index) => // store local state in new var
-        (quoteArr[index].toLowerCase() === guessedLetter ? quoteArr[index] : item));
-      dispatch(updateGuessArr(newGuessQuote));
-      if (quoteArr.toString() === newGuessQuote.toString()) { // compare updated state that is set in stored in new var
-        dispatch(winGame());
-      }
-    } else {
-      dispatch(updateErrorMsg('Wrong guess'));
-      const currErrorNum = errorNum + 1;
-      dispatch(incrementErrorNum());
-      if (currErrorNum >= 6) { // Condition for game lost
-        dispatch(loseGame());
-      }
-    }
-    dispatch(addGuessedLetter(guessedLetter));
+  
+    dispatch(guessHandler({
+      guessedLetter,
+      quoteArr,
+      guessQuote,
+      errorNum
+    }));
+  
     setInputValue('');
   };
 

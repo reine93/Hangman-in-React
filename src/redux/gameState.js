@@ -23,27 +23,11 @@ export const gameSlice = createSlice({
     changePlayerName: (state, action) => {
       state.playerName = action.payload;
     },
-    updateGuessArr: (state, action) => {
-      state.guessQuote = action.payload;
-    },
-    incrementErrorNum: (state) => {
-      state.errorNum += 1;
-    },
     updateErrorMsg: (state, action) => {
       state.errorMessage = action.payload;
     },
-    addGuessedLetter: (state, action) => {
-      state.usedLetters = [...state.usedLetters, action.payload];
-    },
-
     addTime: (state, action) => {
       state.timeElapsed += action.payload;
-    },
-    winGame: (state) => {
-      state.gameWon = true;
-    },
-    loseGame: (state) => {
-      state.gameLost = true;
     },
     resetGameState: (state) => {
       state.quoteId = undefined;
@@ -75,20 +59,42 @@ export const gameSlice = createSlice({
       state.addQuoteLen = action.payload.length;
       state.uniqueChars = [...new Set(state.quoteArr)].filter((char) => guessPattern.test(char)).length;
     },
+
+    guessHandler: (state, action) => {
+      const { guessedLetter, quoteArr, guessQuote } = action.payload;
+  
+      if (quoteArr.some((char) => char.toLowerCase() === guessedLetter)) {
+        const newGuessQuote = guessQuote.map((item, index) =>
+          (quoteArr[index].toLowerCase() === guessedLetter ? quoteArr[index] : item));
+        
+        state.guessQuote = newGuessQuote;
+        
+        if (quoteArr.toString() === newGuessQuote.toString()) {
+          state.gameWon = true;
+        }
+      } else {
+        state.errorMessage = 'Wrong guess';
+        state.errorNum += 1; 
+  
+        if (state.errorNum >= 6) {
+          state.gameLost = true;
+        }
+      }
+  
+      state.usedLetters = [...state.usedLetters, guessedLetter];
+    },
   },
 });
 
+
+
 export const {
-  updateGuessArr,
   changePlayerName,
-  incrementErrorNum,
   updateErrorMsg,
-  addGuessedLetter,
   addTime,
-  winGame,
-  loseGame,
   resetGameState,
   generateNewQuote,
+  guessHandler
 } = gameSlice.actions;
 
 export default gameSlice.reducer;

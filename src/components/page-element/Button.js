@@ -25,9 +25,6 @@ function Button({
     <button
       className={definedStyling}
       disabled={disabled}
-      primary
-      success
-      danger
       {...rest}
     >
       {children}

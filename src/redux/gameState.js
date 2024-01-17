@@ -14,6 +14,7 @@ const initialState = {
   errorMessage: '',
   gameWon: false,
   gameLost: false,
+  gameReset: false
 };
 
 export const gameSlice = createSlice({
@@ -29,7 +30,9 @@ export const gameSlice = createSlice({
     addTime: (state, action) => {
       state.timeElapsed += action.payload;
     },
+
     resetGameState: (state) => {
+      state.gameReset = true
       state.quoteId = undefined;
       state.quoteLen = undefined;
       state.uniqueChars = undefined;
@@ -39,6 +42,10 @@ export const gameSlice = createSlice({
       state.errorMessage = '';
       state.gameWon = false;
       state.gameLost = false;
+    },
+
+    completeGameReset: (state) => {
+      state.gameReset = false;
     },
 
     generateNewQuote: (state, action) => {
@@ -94,7 +101,8 @@ export const {
   addTime,
   resetGameState,
   generateNewQuote,
-  guessHandler
+  guessHandler,
+  completeGameReset
 } = gameSlice.actions;
 
 export default gameSlice.reducer;

@@ -1,42 +1,43 @@
 import { useState, useRef, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { addTime } from '../../redux/gameState';
+import { addTime, completeGameReset } from '../../redux/gameState';
 
-function GameTimer({ onGameEnd, reset, onGameReset }) {
-  const [timeTick, setTimeTick] = useState(0);
-  const { gameWon, gameLost } = useSelector((state) => state.game);
+function GameTimer({ onGameEnd }) {
+  const startTime = useRef(Date.now())
+  const [elapsedTime, setElapsedTime] = useState(0)
+  const { gameWon, gameLost, gameReset } = useSelector((state) => state.game);
   const dispatch = useDispatch();
   const intervalID = useRef(null);
 
   const handleTimer = () => {
-    setTimeTick((prev) => prev + 1000);
+    setElapsedTime(Date.now() - startTime.current);
   };
 
   useEffect(() => {
-    if (reset) {
+    if (gameReset || gameWon || gameLost) { //always clear interval if one of the states changes
       clearInterval(intervalID.current);
-      setTimeTick(0);
-      onGameReset();
-    } else if (!reset) { // default
+      if (gameReset) {
+        setElapsedTime(0); 
+        dispatch(completeGameReset()); //set game reset back to false as timer has been reset
+      }
+      if (gameWon) {
+        dispatch(addTime(elapsedTime));
+        onGameEnd();
+      }
+    } else {
+      //default
+      startTime.current = Date.now();
       intervalID.current = setInterval(handleTimer, 1000);
-      return () => clearInterval(intervalID.current);
     }
-  }, [reset]);
 
-  useEffect(() => {
-    if (gameWon) {
-      dispatch(addTime(timeTick));
-      clearInterval(intervalID.current);
-      onGameEnd();
-    } else if (gameLost) {
-      clearInterval(intervalID.current);
-    }
-  }, [gameWon, gameLost]);
+    return () => clearInterval(intervalID.current);
+  }, [gameReset, gameWon, gameLost]);
+
 
   return (
     <div>
       <span>Time elapsed: </span>
-      <span className="inline-block min-w-[50px] text-left">{Math.floor(timeTick / 1000)}</span>
+      <span className="inline-block min-w-[50px] text-left">{Math.round(elapsedTime / 1000)}</span>
     </div>
   );
 }
